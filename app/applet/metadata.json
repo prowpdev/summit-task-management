@@ -1,0 +1,6 @@
+{
+  "name": "TaskFlow",
+  "description": "Collaborative multi-user task management platform with drag-and-drop Kanban workflow, recurring reminders, priorities, centralized API client, and real-time team notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
