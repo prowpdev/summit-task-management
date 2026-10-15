@@ -10,14 +10,15 @@ import {
   Repeat,
   Code2,
   ChevronDown,
-  Shield,
+  FileCode,
   User as UserIcon,
-  LogOut,
 } from 'lucide-react';
 
+export type ActiveNavTab = 'board' | 'recurring' | 'team' | 'api' | 'laravel';
+
 interface TopBarProps {
-  currentTab: 'board' | 'recurring' | 'team' | 'api';
-  onTabChange: (tab: 'board' | 'recurring' | 'team' | 'api') => void;
+  currentTab: ActiveNavTab;
+  onTabChange: (tab: ActiveNavTab) => void;
   onOpenNewTaskModal: () => void;
   onSelectTaskFromNotif?: (taskId: string) => void;
   onOpenAuthModal: () => void;
@@ -52,8 +53,8 @@ export const TopBar: React.FC<TopBarProps> = ({
             </button>
           </div>
 
-          {/* Zone 2: 4 single-line navigation links */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+          {/* Zone 2: Navigation links */}
+          <nav className="hidden lg:flex items-center gap-5 text-sm font-medium text-slate-600">
             <button
               onClick={() => onTabChange('board')}
               className={`flex items-center gap-1.5 py-1.5 transition-colors whitespace-nowrap shrink-0 border-b-2 ${
@@ -101,6 +102,18 @@ export const TopBar: React.FC<TopBarProps> = ({
               <Code2 className="w-4 h-4" />
               <span>Centralized API</span>
             </button>
+
+            <button
+              onClick={() => onTabChange('laravel')}
+              className={`flex items-center gap-1.5 py-1.5 transition-colors whitespace-nowrap shrink-0 border-b-2 ${
+                currentTab === 'laravel'
+                  ? 'border-rose-600 text-slate-900 font-semibold'
+                  : 'border-transparent text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <FileCode className="w-4 h-4 text-rose-500" />
+              <span>Laravel Backend</span>
+            </button>
           </nav>
 
           {/* Zone 3: Notification bell, Persona switcher, and 1 Primary action */}
@@ -108,7 +121,7 @@ export const TopBar: React.FC<TopBarProps> = ({
             {/* Notification Bell */}
             <div className="relative">
               <button
-                onClick={() => setIsNotifOpen(prev => !prev)}
+                onClick={() => setIsNotifOpen((prev) => !prev)}
                 className="relative p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
                 title="Notifications"
                 aria-label="Notifications"
@@ -131,7 +144,7 @@ export const TopBar: React.FC<TopBarProps> = ({
             {/* Persona Switcher / Profile Dropdown */}
             <div className="relative">
               <button
-                onClick={() => setIsUserMenuOpen(prev => !prev)}
+                onClick={() => setIsUserMenuOpen((prev) => !prev)}
                 className="flex items-center gap-2 p-1.5 text-left rounded-lg hover:bg-slate-100 border border-slate-200/80 transition-colors"
               >
                 <img
@@ -149,9 +162,7 @@ export const TopBar: React.FC<TopBarProps> = ({
                       {currentUser?.name || 'Account'}
                     </span>
                     {currentUser?.role === 'manager' && (
-                      <span className="text-[10px] text-blue-700 font-semibold">
-                        (Lead)
-                      </span>
+                      <span className="text-[10px] text-blue-700 font-semibold">(Lead)</span>
                     )}
                   </div>
                 </div>

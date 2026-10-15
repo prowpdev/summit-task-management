@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider, useNotifications } from './context/NotificationContext';
-import { TopBar } from './components/TopBar';
+import { TopBar, ActiveNavTab } from './components/TopBar';
 import { FilterToolbar } from './components/FilterToolbar';
 import { KanbanBoard } from './components/KanbanBoard';
 import { RecurringView } from './components/RecurringView';
 import { TeamDirectoryView } from './components/TeamDirectoryView';
 import { ApiConsoleView } from './components/ApiConsoleView';
+import { LaravelExplorerView } from './components/LaravelExplorerView';
 import { TaskModal } from './components/TaskModal';
 import { AuthModal } from './components/AuthModal';
 import { ToastContainer } from './components/ToastContainer';
@@ -26,7 +27,7 @@ function MainApp() {
   const { currentUser, users } = useAuth();
   const { triggerToast } = useNotifications();
 
-  const [currentTab, setCurrentTab] = useState<'board' | 'recurring' | 'team' | 'api'>('board');
+  const [currentTab, setCurrentTab] = useState<ActiveNavTab>('board');
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filters, setFilters] = useState<FilterState>(initialFilters);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -198,6 +199,8 @@ function MainApp() {
         )}
 
         {currentTab === 'api' && <ApiConsoleView />}
+
+        {currentTab === 'laravel' && <LaravelExplorerView />}
       </main>
 
       {/* Task Modal (Create / Edit) */}
